@@ -35,10 +35,9 @@ class RuntModuleTest < MiniTest::Unit::TestCase
   end
 
   def test_month_name
-    i=0
-    Date::MONTHNAMES.each do |n|
-      assert_equal Date::MONTHNAMES[i], Runt.month_name(i)
-      i=i+1
+    Date::MONTHNAMES.each_with_index do |name, index|
+      next if name.nil? # first element is nil
+      assert_equal Date::MONTHNAMES[index], Runt.month_name(index)
     end
   end
 

@@ -63,6 +63,8 @@ module Runt
     end
 
     def month_name(number)
+      # NOTE: first element is nil
+      # Jan => 1 (non-zero based)
       Date::MONTHNAMES[number]
     end
 

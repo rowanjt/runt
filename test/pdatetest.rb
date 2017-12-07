@@ -4,7 +4,7 @@ require 'minitest_helper'
 
 # Unit tests for PDate class
 # Author:: Matthew Lipper
-class PDateTest < MiniTest::Unit::TestCase
+class PDateTest < Minitest::Test
 
   include Runt
 

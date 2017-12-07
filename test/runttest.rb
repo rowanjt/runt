@@ -2,7 +2,7 @@
 
 require 'minitest_helper'
 
-class RuntModuleTest < MiniTest::Unit::TestCase
+class RuntModuleTest < Minitest::Test
 
   def test_last
     assert Runt::Last == -1

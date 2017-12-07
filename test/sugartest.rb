@@ -2,7 +2,7 @@
 
 require 'minitest_helper'
 
-class SugarTest < MiniTest::Unit::TestCase
+class SugarTest < Minitest::Test
   include Runt
 
   def setup

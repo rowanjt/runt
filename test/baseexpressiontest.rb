@@ -7,7 +7,7 @@ $DEBUG=false
 # Base test case for refactored temporal expression unit tests
 # Author:: Matthew Lipper
 
-class BaseExpressionTest < MiniTest::Unit::TestCase
+class BaseExpressionTest < Minitest::Test
 
   include Runt
   include DPrecision

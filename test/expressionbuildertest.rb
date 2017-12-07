@@ -2,7 +2,7 @@
 
 require 'minitest_helper'
 
-class ExpressionBuilderTest < MiniTest::Unit::TestCase
+class ExpressionBuilderTest < Minitest::Test
 
   def setup
     @builder = ExpressionBuilder.new

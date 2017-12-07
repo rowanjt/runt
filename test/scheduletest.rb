@@ -4,7 +4,7 @@ require 'minitest_helper'
 
 # Unit tests for Schedule classes
 # Author:: Matthew Lipper
-class ScheduleTest < MiniTest::Unit::TestCase
+class ScheduleTest < Minitest::Test
 
   include Runt
 

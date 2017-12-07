@@ -6,7 +6,7 @@ require 'minitest_helper'
 #
 # Author:: Matthew Lipper
 
-class DPrecisionTest < MiniTest::Unit::TestCase
+class DPrecisionTest < Minitest::Test
 
   include Runt
 

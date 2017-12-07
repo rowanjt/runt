@@ -38,8 +38,8 @@ class ExpressionBuilderTest < MiniTest::Unit::TestCase
   def test_except_should_call_add_with_expression_and_minus
     @builder.add(1,:to_s)
     result = @builder.except(3) # result = 1 - 3
-    assert_equal -2, result, "Result should equal -2 == 1 - 3"
-    assert_equal -2, @builder.ctx, "Builder context should equal result"
+    assert_equal(-2, result, "Result should equal -2 == 1 - 3")
+    assert_equal(-2, @builder.ctx, "Builder context should equal result")
   end
 
   def test_possibly_should_call_add_with_expression_and_pipe

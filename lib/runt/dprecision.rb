@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'runt'
 require 'date'
 
 module Runt

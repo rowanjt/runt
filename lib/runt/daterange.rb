@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'date'
-require 'runt'
-
 
 module Runt
   # :title:DateRange

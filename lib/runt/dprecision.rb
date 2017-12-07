@@ -15,9 +15,9 @@ module Runt
   module DPrecision
 
     def DPrecision.to_p(date,prec=DEFAULT)
-	  # has_p = date.respond_to?(:date_precision)
-	  # puts "DPrecision.to_p(#{date.class}<#{has_p ? date.date_precision : nil}>,#{prec})"
-	  return date if PDate == date.class && (prec == date.date_precision)
+  	  # has_p = date.respond_to?(:date_precision)
+  	  # puts "DPrecision.to_p(#{date.class}<#{has_p ? date.date_precision : nil}>,#{prec})"
+  	  return date if PDate == date.class && (prec == date.date_precision)
       case prec
         when MIN then PDate.min(*DPrecision.explode(date,prec))
         when DAY then PDate.day(*DPrecision.explode(date,prec))
@@ -133,19 +133,18 @@ module Runt
       def label
         LABEL[@precision]
       end
-  end
+    end
 
-  #Pseudo Singletons:
-  YEAR = Precision.year
-  MONTH = Precision.month
-  WEEK = Precision.week
-  DAY = Precision.day
-  HOUR = Precision.hour
-  MIN = Precision.min
-  SEC = Precision.sec
-  MILLI = Precision.millisec
-  DEFAULT=MIN
-
+    #Pseudo Singletons:
+    YEAR = Precision.year
+    MONTH = Precision.month
+    WEEK = Precision.week
+    DAY = Precision.day
+    HOUR = Precision.hour
+    MIN = Precision.min
+    SEC = Precision.sec
+    MILLI = Precision.millisec
+    DEFAULT=MIN
   end
 
 end

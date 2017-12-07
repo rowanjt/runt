@@ -172,13 +172,14 @@ class Date
     # suppress warning: instance variable @date_precision not initialized
     @date_precision ||= nil
 
-	if @date_precision.nil? then
-      if self.class == DateTime then
+  	if @date_precision.nil?
+      if self.class == DateTime
         @date_precision = Runt::DPrecision::SEC
-	  else
+      else
         @date_precision = Runt::DPrecision::DAY
-	  end
-	end
+      end
+  	end
+
     @date_precision
   end
 end

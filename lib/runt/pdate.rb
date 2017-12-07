@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'date'
+require 'runt/dprecision'
 
 module Runt
 

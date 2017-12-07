@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'date'
-
 module Runt
 
   # :title:DPrecision

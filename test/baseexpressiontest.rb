@@ -8,9 +8,7 @@ $DEBUG=false
 # Author:: Matthew Lipper
 
 class BaseExpressionTest < Minitest::Test
-
   include Runt
-  include DPrecision
 
   def setup
     @stub1 = StubExpression.new(false, "stub 1", false)

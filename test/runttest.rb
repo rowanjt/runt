@@ -29,6 +29,10 @@ class RuntModuleTest < Minitest::Test
     assert_equal 'last', Runt.ordinalize(-1)
   end
 
+  def test_const
+    assert_equal Runt::Monday, Runt.const('monday')
+  end
+
   def test_day_name
     i=0
     Date::DAYNAMES.each do |n|

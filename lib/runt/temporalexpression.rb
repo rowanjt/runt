@@ -1,10 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'date'
-require 'runt/dprecision'
-require 'runt/pdate'
-require 'pp'
-
 #
 # Author:: Matthew Lipper
 

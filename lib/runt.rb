@@ -31,14 +31,15 @@
 # warranties of merchantibility and fitness for a particular
 # purpose.
 
-require 'yaml'
+require 'refine_date'
+require 'refine_time'
+require 'refine_numeric'
+
 require "runt/version"
-require "runt/dprecision"
 require "runt/pdate"
 require "runt/temporalexpression"
 require "runt/schedule"
 require "runt/daterange"
-require "runt/sugar"
 require "runt/expressionbuilder"
 
 #
@@ -55,6 +56,9 @@ require "runt/expressionbuilder"
 module Runt
 
   class << self
+    def const(string)
+      self.const_get(string.capitalize)
+    end
 
     def day_name(number)
       Date::DAYNAMES[number]

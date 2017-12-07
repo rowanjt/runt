@@ -26,9 +26,11 @@
 # * <b>:maybe</b> - alias for :possibly method
 #
 
+require "runt/sugar"
+
 class ExpressionBuilder
 
-  include Runt
+  include Runt::Sugar
 
   attr_accessor :ctx
 

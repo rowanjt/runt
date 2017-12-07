@@ -16,8 +16,8 @@ module Runt
   module DPrecision
 
     def DPrecision.to_p(date,prec=DEFAULT)
-	  has_p = date.respond_to?(:date_precision)
-	  #puts "DPrecision.to_p(#{date.class}<#{has_p ? date.date_precision : nil}>,#{prec})"
+	  # has_p = date.respond_to?(:date_precision)
+	  # puts "DPrecision.to_p(#{date.class}<#{has_p ? date.date_precision : nil}>,#{prec})"
 	  return date if PDate == date.class && (prec == date.date_precision)
       case prec
         when MIN then PDate.min(*DPrecision.explode(date,prec))

@@ -3,6 +3,7 @@
 require 'minitest_helper'
 
 class RuntModuleTest < Minitest::Test
+  using CoreExtensions::DatePrecision
 
   def test_last
     assert Runt::Last == -1

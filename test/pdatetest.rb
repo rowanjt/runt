@@ -5,6 +5,7 @@ require 'minitest_helper'
 # Unit tests for PDate class
 # Author:: Matthew Lipper
 class PDateTest < Minitest::Test
+  using CoreExtensions::DatePrecision
 
   include Runt
 
@@ -24,11 +25,11 @@ class PDateTest < Minitest::Test
   end
 
   def test_pdate_with_native_range
-	start_dt = PDate.min(2013,04,22,8,0)
-	middle_dt = PDate.min(2013,04,22,8,2)
-	end_dt = PDate.min(2013,04,22,8,04)
-	range = start_dt..end_dt
-	assert(range.include?(middle_dt))
+  	start_dt = PDate.min(2013,04,22,8,0)
+  	middle_dt = PDate.min(2013,04,22,8,2)
+  	end_dt = PDate.min(2013,04,22,8,04)
+  	range = start_dt..end_dt
+  	assert(range.include?(middle_dt))
   end
 
   def test_marshal
@@ -38,8 +39,8 @@ class PDateTest < Minitest::Test
     data=Marshal.dump pdate
     obj=Marshal.load data
     refute_nil obj.date_precision
-	#FIXME: marshall broken in 1.9
-	#assert(obj.eql?(pdate))
+  	#FIXME: marshall broken in 1.9
+  	#assert(obj.eql?(pdate))
     #assert(pdate.eql?(obj))
   end
 
@@ -47,7 +48,8 @@ class PDateTest < Minitest::Test
     pdate = PDate.new(2006,3,10)
     assert(pdate.include?(Date.new(2006,3,10)))
     date = Date.new(2006,3,10)
-    assert(date.include?(PDate.new(2006,3,10)))
+    # assert(date.include?(PDate.new(2006,3,10)))
+    assert(date.eql?(PDate.new(2006,3,10)))
   end
 
   def test_new

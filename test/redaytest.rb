@@ -6,7 +6,7 @@ require 'baseexpressiontest'
 # Author:: Matthew Lipper
 
 class REDayTest < BaseExpressionTest
-
+  # using CoreExtensions::DatePrecision
 
   def test_noon_to_430
     #noon to 4:30pm
@@ -35,9 +35,9 @@ class REDayTest < BaseExpressionTest
     expr = REDay.new(8,00,10,00, false)
     assert !expr.include?(@pdate_20040531), \
       "Expression #{expr.to_s} created with less_precise_match=false should not include any lower precision argument automatically"
-	## Date class which has no public hour or min methods should not cause an exception
-	assert !expr.include?(@date_19611101), \
-	  "Expression #{expr.to_s} created with less_precise_match=false should not hurl when given a Date instance"
+  	## Date class which has no public hour or min methods should not cause an exception
+  	assert !expr.include?(@date_19611101), \
+  	  "Expression #{expr.to_s} created with less_precise_match=false should not hurl when given a Date instance"
   end
 
 end

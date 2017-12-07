@@ -611,6 +611,7 @@ module Runt
   # less.
   #
   class REDay
+    using CoreExtensions::DatePrecision
 
     include TExpr
 

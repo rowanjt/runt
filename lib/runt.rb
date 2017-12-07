@@ -31,6 +31,8 @@
 # warranties of merchantibility and fitness for a particular
 # purpose.
 
+require 'refine_date'
+
 require 'yaml'
 require 'time'
 require 'date'
@@ -153,35 +155,6 @@ module Runt
   Last_of = LastProc[First]
   Second_to_last = LastProc[Second]
 
-end
-
-#
-# Add precision +Runt::DPrecision+ to standard library classes Date and DateTime
-# (which is a subclass of Date). Also, add an include? method for interoperability
-# with +Runt::TExpr+ classes
-#
-class Date
-
-  include Runt
-
-  alias_method :include?, :eql?
-
-  attr_writer :date_precision
-
-  def date_precision
-    # suppress warning: instance variable @date_precision not initialized
-    @date_precision ||= nil
-
-  	if @date_precision.nil?
-      if self.class == DateTime
-        @date_precision = Runt::DPrecision::SEC
-      else
-        @date_precision = Runt::DPrecision::DAY
-      end
-  	end
-
-    @date_precision
-  end
 end
 
 #

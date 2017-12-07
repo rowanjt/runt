@@ -158,57 +158,6 @@ module Runt
 end
 
 #
-# Add the ability to use Time class
-#
-# Contributed by Paul Wright
-#
-class Time
-
-  include Runt
-
-  attr_writer :date_precision
-  alias_method :old_initialize, :initialize
-  def initialize(*args)
-    if(args[0].instance_of?(Runt::DPrecision::Precision))
-      @precision=args.shift
-    else
-      @precision=Runt::DPrecision::SEC
-    end
-    old_initialize(*args)
-  end
-
-  alias :old_to_yaml :to_yaml
-  def to_yaml(options)
-    if self.instance_variables.empty?
-      self.old_to_yaml(options)
-    else
-      Time.old_parse(self.to_s).old_to_yaml(options)
-    end
-  end
-
-  class << self
-    alias_method :old_parse, :parse
-    def parse(*args)
-      precision=Runt::DPrecision::DEFAULT
-      if(args[0].instance_of?(Runt::DPrecision::Precision))
-        precision=args.shift
-      end
-      _parse=old_parse(*args)
-      _parse.date_precision=precision
-      _parse
-    end
-  end
-
-  def date_precision
-    # suppress warning: instance variable @date_precision not initialized
-    @date_precision ||= nil
-
-    return @date_precision unless @date_precision.nil?
-    return Runt::DPrecision::DEFAULT
-  end
-end
-
-#
 # Useful shortcuts!
 #
 # Contributed by Ara T. Howard who is pretty sure he got the idea from

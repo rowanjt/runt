@@ -1,4 +1,6 @@
 # Add precision +Runt::DPrecision+ to standard library class Time
+require 'time'
+
 module CoreExtensions
   module TimePrecision
     module ClassMethods
@@ -49,11 +51,11 @@ module CoreExtensions
       end
     end
 
-    refine ::Time do
+    refine Time do
       prepend TimePrecision::InstanceMethods
     end
 
-    refine ::Time.singleton_class do
+    refine Time.singleton_class do
       prepend TimePrecision::ClassMethods
     end
   end

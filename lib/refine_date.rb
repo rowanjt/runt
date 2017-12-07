@@ -30,11 +30,11 @@ module CoreExtensions
       end
     end
 
-    # refine ::Date.singleton_class do
+    # refine Date.singleton_class do
     #   prepend DatePrecision::ClassMethods
     # end
 
-    refine ::Date do
+    refine Date do
       prepend DatePrecision::InstanceMethods
     end
   end

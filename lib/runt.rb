@@ -31,11 +31,7 @@
 # warranties of merchantibility and fitness for a particular
 # purpose.
 
-require 'refine_date'
-
 require 'yaml'
-require 'time'
-require 'date'
 require "runt/version"
 require "runt/dprecision"
 require "runt/pdate"
@@ -83,18 +79,18 @@ module Runt
     #
     def ordinalize(number)
       if (number.to_i==-1)
-	'last'
+      	'last'
       elsif (number.to_i==-2)
-	'second to last'
+      	'second to last'
       elsif (11..13).include?(number.to_i % 100)
-	"#{number}th"
+      	"#{number}th"
       else
-	case number.to_i % 10
-	  when 1 then "#{number}st"
-	  when 2 then "#{number}nd"
-	  when 3 then "#{number}rd"
-	  else    "#{number}th"
-	end
+        case number.to_i % 10
+          when 1 then "#{number}st"
+          when 2 then "#{number}nd"
+          when 3 then "#{number}rd"
+          else        "#{number}th"
+        end
       end
     end
 
@@ -154,28 +150,4 @@ module Runt
   Last = LastProc[First]
   Last_of = LastProc[First]
   Second_to_last = LastProc[Second]
-
-end
-
-#
-# Useful shortcuts!
-#
-# Contributed by Ara T. Howard who is pretty sure he got the idea from
-# somewhere else. :-)
-#
-class Numeric #:nodoc:
-  def microseconds() Float(self  * (10 ** -6)) end unless self.instance_methods.include?('microseconds')
-  def milliseconds() Float(self  * (10 ** -3)) end unless self.instance_methods.include?('milliseconds')
-  def seconds() self end unless self.instance_methods.include?('seconds')
-  def minutes() 60 * seconds end unless self.instance_methods.include?('minutes')
-  def hours() 60 * minutes end unless self.instance_methods.include?('hours')
-  def days() 24 * hours end unless self.instance_methods.include?('days')
-  def weeks() 7 * days end unless self.instance_methods.include?('weeks')
-  def months() 30 * days end unless self.instance_methods.include?('months')
-  def years() 365 * days end unless self.instance_methods.include?('years')
-  def decades() 10 * years end unless self.instance_methods.include?('decades')
-  # This causes RDoc to hurl:
-  %w[
-  microseconds milliseconds seconds minutes hours days weeks months years decades
-  ].each{|m| alias_method m.chop, m}
 end

@@ -4,7 +4,7 @@ require 'minitest_helper'
 
 # Unit tests for Schedule classes
 # Author:: Matthew Lipper
-class ScheduleTest < MiniTest::Unit::TestCase
+class ScheduleTest < Minitest::Test
 
   include Runt
 
@@ -124,9 +124,9 @@ class ScheduleTest < MiniTest::Unit::TestCase
     resource = Resource.new(@sched)
     # Add a another overlapping event
     resource.add_event(Event.new("Yodeling Lesson"),expr2)
-    # Create a new resource using the same schedule
-    resource2 = Resource.new(@sched)
-    # Add a another overlapping event and pass a block which should complain
+    # # Create a new resource using the same schedule
+    # resource2 = Resource.new(@sched)
+    # # Add a another overlapping event and pass a block which should complain
     #resource.add_event(Event.new("Yodeling Lesson"),expr2) \
     #{|e,s| raise "Resource not available at requested time(s)." \
     #  if (@schedule.overlap?(s))}

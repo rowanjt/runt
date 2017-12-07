@@ -2,7 +2,10 @@
 
 require 'minitest_helper'
 
-class RuntModuleTest < MiniTest::Unit::TestCase
+class RuntModuleTest < Minitest::Test
+  using CoreExtensions::DatePrecision
+  using CoreExtensions::TimePrecision
+  using CoreExtensions::NumericExtention
 
   def test_last
     assert Runt::Last == -1
@@ -26,6 +29,10 @@ class RuntModuleTest < MiniTest::Unit::TestCase
     assert_equal 'last', Runt.ordinalize(-1)
   end
 
+  def test_const
+    assert_equal Runt::Monday, Runt.const('monday')
+  end
+
   def test_day_name
     i=0
     Date::DAYNAMES.each do |n|
@@ -35,10 +42,9 @@ class RuntModuleTest < MiniTest::Unit::TestCase
   end
 
   def test_month_name
-    i=0
-    Date::MONTHNAMES.each do |n|
-      assert_equal Date::MONTHNAMES[i], Runt.month_name(i)
-      i=i+1
+    Date::MONTHNAMES.each_with_index do |name, index|
+      next if name.nil? # first element is nil
+      assert_equal Date::MONTHNAMES[index], Runt.month_name(index)
     end
   end
 

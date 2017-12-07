@@ -2,11 +2,7 @@
 
 require 'minitest_helper'
 
-# Unit tests for DateRange class
-#
-# Author:: Matthew Lipper
-class DateRangeTest < MiniTest::Unit::TestCase
-
+class DateRangeTest < Minitest::Test
   include Runt
 
   def test_sub_range

@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'date'
-require 'runt'
-
+require 'runt/dprecision'
 
 module Runt
 
@@ -79,14 +77,14 @@ module Runt
       when Numeric then
         return self+(-x)
       when Date then
-	 	return super(DPrecision::to_p(x,@date_precision))
+  	 	return super(DPrecision::to_p(x,@date_precision))
       end
       raise TypeError, 'expected numeric or date'
     end
 
     def <=> (other)
       result = nil
-	  raise "I'm broken #{self.to_s}" if @date_precision.nil?
+  	  raise "I'm broken #{self.to_s}" if @date_precision.nil?
       if(!other.nil? && other.respond_to?("date_precision") && other.date_precision>@date_precision)
         result = super(DPrecision::to_p(other,@date_precision))
       else
@@ -97,8 +95,8 @@ module Runt
     end
 
     def succ
-	  result = self + 1
-	end
+      self + 1
+    end
 
     def to_date
       (self.date_precision > DAY) ? DateTime.new(self.year,self.month,self.day,self.hour,self.min,self.sec) : Date.new(self.year, self.month, self.day)

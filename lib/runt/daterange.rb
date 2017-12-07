@@ -1,9 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'date'
-require 'runt'
-
-
 module Runt
   # :title:DateRange
   # == DateRange
@@ -15,8 +11,6 @@ module Runt
   #
   # Author:: Matthew Lipper
   class DateRange < Range
-
-    include DPrecision
 
     attr_reader :start_expr, :end_expr
 

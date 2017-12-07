@@ -31,16 +31,15 @@
 # warranties of merchantibility and fitness for a particular
 # purpose.
 
-require 'yaml'
-require 'time'
-require 'date'
+require 'refine_date'
+require 'refine_time'
+require 'refine_numeric'
+
 require "runt/version"
-require "runt/dprecision"
 require "runt/pdate"
 require "runt/temporalexpression"
 require "runt/schedule"
 require "runt/daterange"
-require "runt/sugar"
 require "runt/expressionbuilder"
 
 #
@@ -57,12 +56,17 @@ require "runt/expressionbuilder"
 module Runt
 
   class << self
+    def const(string)
+      self.const_get(string.capitalize)
+    end
 
     def day_name(number)
       Date::DAYNAMES[number]
     end
 
     def month_name(number)
+      # NOTE: first element is nil
+      # Jan => 1 (non-zero based)
       Date::MONTHNAMES[number]
     end
 
@@ -79,18 +83,18 @@ module Runt
     #
     def ordinalize(number)
       if (number.to_i==-1)
-	'last'
+      	'last'
       elsif (number.to_i==-2)
-	'second to last'
+      	'second to last'
       elsif (11..13).include?(number.to_i % 100)
-	"#{number}th"
+      	"#{number}th"
       else
-	case number.to_i % 10
-	  when 1 then "#{number}st"
-	  when 2 then "#{number}nd"
-	  when 3 then "#{number}rd"
-	  else    "#{number}th"
-	end
+        case number.to_i % 10
+          when 1 then "#{number}st"
+          when 2 then "#{number}nd"
+          when 3 then "#{number}rd"
+          else        "#{number}th"
+        end
       end
     end
 
@@ -150,102 +154,4 @@ module Runt
   Last = LastProc[First]
   Last_of = LastProc[First]
   Second_to_last = LastProc[Second]
-
 end
-
-#
-# Add precision +Runt::DPrecision+ to standard library classes Date and DateTime
-# (which is a subclass of Date). Also, add an include? method for interoperability
-# with +Runt::TExpr+ classes
-#
-class Date
-
-  include Runt
-
-  alias_method :include?, :eql?
-
-  attr_accessor :date_precision
-
-  def date_precision
-	if @date_precision.nil? then
-      if self.class == DateTime then
-        @date_precision = Runt::DPrecision::SEC
-	  else
-        @date_precision = Runt::DPrecision::DAY
-	  end
-	end
-    @date_precision
-  end
-end
-
-#
-# Add the ability to use Time class
-#
-# Contributed by Paul Wright
-#
-class Time
-
-  include Runt
-
-  attr_accessor :date_precision
-  alias_method :old_initialize, :initialize
-  def initialize(*args)
-    if(args[0].instance_of?(Runt::DPrecision::Precision))
-      @precision=args.shift
-    else
-      @precision=Runt::DPrecision::SEC
-    end
-    old_initialize(*args)
-  end
-
-  alias :old_to_yaml :to_yaml
-  def to_yaml(options)
-    if self.instance_variables.empty?
-      self.old_to_yaml(options)
-    else
-      Time.old_parse(self.to_s).old_to_yaml(options)
-    end
-  end
-
-  class << self
-    alias_method :old_parse, :parse
-    def parse(*args)
-      precision=Runt::DPrecision::DEFAULT
-      if(args[0].instance_of?(Runt::DPrecision::Precision))
-        precision=args.shift
-      end
-      _parse=old_parse(*args)
-      _parse.date_precision=precision
-      _parse
-    end
-  end
-
-  def date_precision
-    return @date_precision unless @date_precision.nil?
-    return Runt::DPrecision::DEFAULT
-  end
-end
-
-#
-# Useful shortcuts!
-#
-# Contributed by Ara T. Howard who is pretty sure he got the idea from
-# somewhere else. :-)
-#
-class Numeric #:nodoc:
-  def microseconds() Float(self  * (10 ** -6)) end unless self.instance_methods.include?('microseconds')
-  def milliseconds() Float(self  * (10 ** -3)) end unless self.instance_methods.include?('milliseconds')
-  def seconds() self end unless self.instance_methods.include?('seconds')
-  def minutes() 60 * seconds end unless self.instance_methods.include?('minutes')
-  def hours() 60 * minutes end unless self.instance_methods.include?('hours')
-  def days() 24 * hours end unless self.instance_methods.include?('days')
-  def weeks() 7 * days end unless self.instance_methods.include?('weeks')
-  def months() 30 * days end unless self.instance_methods.include?('months')
-  def years() 365 * days end unless self.instance_methods.include?('years')
-  def decades() 10 * years end unless self.instance_methods.include?('decades')
-  # This causes RDoc to hurl:
-  %w[
-  microseconds milliseconds seconds minutes hours days weeks months years decades
-  ].each{|m| alias_method m.chop, m}
-end
-

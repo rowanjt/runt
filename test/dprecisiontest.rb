@@ -2,12 +2,7 @@
 
 require 'minitest_helper'
 
-# Unit tests for DPrecision class
-#
-# Author:: Matthew Lipper
-
-class DPrecisionTest < MiniTest::Unit::TestCase
-
+class DPrecisionTest < Minitest::Test
   include Runt
 
   def test_comparable

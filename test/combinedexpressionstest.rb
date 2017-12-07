@@ -61,8 +61,8 @@ class CombinedExpressionTest < BaseExpressionTest
   def test_memorial_day
     # Monday through Friday, from 9am to 5pm
     job = REWeek.new(Mon,Fri) & REDay.new(9,00,17,00)
-    # Memorial Day (U.S.)
-    memorial_day = REYear.new(5) & DIMonth.new(Last,Monday)
+    # # Memorial Day (U.S.)
+    # memorial_day = REYear.new(5) & DIMonth.new(Last,Monday)
     # May 29th, 2006
     last_monday_in_may = @pdate_200605291012
     # Before
@@ -160,7 +160,7 @@ class CombinedExpressionTest < BaseExpressionTest
     every_four_hours = EveryTE.new(@pdate_2012050803,4)
     tuesday = DIWeek.new(Tuesday)
     every_four_hours_on_tuesday = every_four_hours & tuesday
-    result = every_four_hours_on_tuesday.dates(range)
+    every_four_hours_on_tuesday.dates(range)
   end
 
 end

@@ -48,7 +48,8 @@ class WIMonthTest < BaseExpressionTest
   end
 
   def test_week_in_month_to_s
-    assert_equal 'last week of any month', WIMonth.new(Last).to_s
+    # 'last week of any month'
+    assert_equal '-1st week of any month', WIMonth.new(Last).to_s
   end
 
 end

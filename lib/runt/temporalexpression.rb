@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-#
-# Author:: Matthew Lipper
+# ordinalize
+require 'active_support/core_ext/integer/inflections'
 
 module Runt
 
@@ -352,7 +352,7 @@ module Runt
     end
 
     def to_s
-      "#{Runt.ordinalize(@week_of_month_index)} #{Runt.day_name(@day_index)} of the month"
+      "#{@week_of_month_index.ordinalize} #{Runt.day_name(@day_index)} of the month"
     end
 
     private
@@ -570,8 +570,8 @@ module Runt
     end
 
     def to_s
-      "#{Runt.month_name(@start_month)} #{Runt.ordinalize(@start_day)} " +
-        "through #{Runt.month_name(@end_month)} #{Runt.ordinalize(@end_day)}"
+      "#{Runt.month_name(@start_month)} #{@start_day.ordinalize} " +
+        "through #{Runt.month_name(@end_month)} #{@end_day.ordinalize}"
     end
 
     private
@@ -712,7 +712,7 @@ module Runt
     end
 
     def to_s
-      "#{Runt.ordinalize(@ordinal)} week of any month"
+      "#{@ordinal.ordinalize} week of any month"
     end
 
   end
@@ -745,7 +745,7 @@ module Runt
     end
 
     def to_s
-      "from the #{Runt.ordinalize(@range.begin)} to the #{Runt.ordinalize(@range.end)} monthly"
+      "from the #{@range.begin.ordinalize} to the #{@range.end.ordinalize} monthly"
     end
 
   end
@@ -811,7 +811,7 @@ module Runt
     end
 
     def to_s
-      "every #{Runt.ordinalize(@interval)} day after #{Runt.format_date(@base_date)}"
+      "every #{@interval.ordinalize} day after #{Runt.format_date(@base_date)}"
     end
 
   end
@@ -875,7 +875,7 @@ module Runt
     end
 
     def to_s
-      "every #{Runt.ordinalize(@interval)} week starting with the week containing #{Runt.format_date(@start_date)}"
+      "every #{@interval.ordinalize} week starting with the week containing #{Runt.format_date(@start_date)}"
     end
 
     private

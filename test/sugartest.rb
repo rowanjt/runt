@@ -73,8 +73,8 @@ class SugarTest < Minitest::Test
       	  st_day, end_day = end_day, st_day
       	end
       	#puts "Checking #{st_month} #{st_day} - #{end_month} #{end_day}"
-      	assert_expression Runt::REYear.new(st_mon_number, st_day, end_mon_number, end_day), \
-      	  self.send('yearly_' + st_month + '_' + st_day.to_s + '_to_' + end_month + '_' + end_day.to_s)
+      	assert_expression Runt::REYear.new(st_mon_number, st_day, end_mon_number, end_day),
+      	  self.send("yearly_#{st_month}_#{st_day}_to_#{end_month}_#{end_day}")
       end
     end
   end

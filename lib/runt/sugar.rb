@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+# require 'active_support/core_ext/date_time/calculations'
+
 #
 #
 # == Overview
@@ -143,41 +145,49 @@ module Runt
     # NOTE: contant strings used for regex
     MONTHS = '(january|february|march|april|may|june|july|august|september|october|november|december)'
     DAYS = '(sunday|monday|tuesday|wednesday|thursday|friday|saturday)'
+    # TODO: replace with active_support/core_ext/integer/inflections.rb
     WEEK_OF_MONTH_ORDINALS = '(first|second|third|fourth|last|second_to_last)'
     ORDINAL_SUFFIX = '(?:st|nd|rd|th)'
+
+    def numeric?(val)
+      Float(val) != nil rescue false
+    end
+
+    def parse_param(param)
+      numeric?(param) ? param.to_i : param
+    end
 
     def method_missing(name, *args, &block)
     	#puts "method_missing(#{name},#{args},#{block}) => #{result}"
       case name.to_s
       when /^daily_(\d{1,2})_(\d{2})([ap]m)_to_(\d{1,2})_(\d{2})([ap]m)$/
         # REDay
-        st_hr, st_min, st_m, end_hr, end_min, end_m = $1, $2, $3, $4, $5, $6
+        st_hr, st_min, st_m, end_hr, end_min, end_m = [$1, $2, $3, $4, $5, $6].map{|p| parse_param(p)}
         args = parse_time(st_hr, st_min, st_m)
         args.concat(parse_time(end_hr, end_min, end_m))
         return REDay.new(*args)
       when Regexp.new('^weekly_' + DAYS + '_to_' + DAYS + '$')
         # REWeek
-        st_day, end_day = $1, $2
+        st_day, end_day = [$1, $2].map{|p| parse_param(p)}
         return REWeek.new(Runt.const(st_day), Runt.const(end_day))
       when Regexp.new('^monthly_(\d{1,2})' + ORDINAL_SUFFIX + '_to_(\d{1,2})' \
   		    + ORDINAL_SUFFIX + '$')
         # REMonth
-        st_day, end_day = $1, $2
+        st_day, end_day = [$1, $2].map{|p| parse_param(p)}
         return REMonth.new(st_day, end_day)
       when Regexp.new('^yearly_' + MONTHS + '_(\d{1,2})_to_' + MONTHS + '_(\d{1,2})$')
         # REYear
-        st_mon, st_day, end_mon, end_day = $1, $2, $3, $4
+        st_mon, st_day, end_mon, end_day = [$1, $2, $3, $4].map{|p| parse_param(p)}
         return REYear.new(Runt.const(st_mon), st_day, Runt.const(end_mon), end_day)
       when Regexp.new('^' + DAYS + '$')
         # DIWeek
         return DIWeek.new(Runt.const(name.to_s))
       when Regexp.new(WEEK_OF_MONTH_ORDINALS + '_' + DAYS)
         # DIMonth
-        ordinal, day = $1, $2
+        ordinal, day = [$1, $2].map{|p| parse_param(p)}
         return DIMonth.new(Runt.const(ordinal), Runt.const(day))
       else
-        # You're hosed
-  	  super
+    	  super
       end
     end
 

@@ -1,3 +1,4 @@
+# replaced by active_support/core_ext/integer/time
 module CoreExtensions
   module NumericExtention
     module ClassMethods

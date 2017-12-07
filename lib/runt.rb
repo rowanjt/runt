@@ -33,7 +33,6 @@
 
 require 'refine_date'
 require 'refine_time'
-require 'refine_numeric'
 
 require "runt/version"
 require "runt/pdate"
@@ -77,27 +76,6 @@ module Runt
     def format_date(date)
       date.ctime
     end
-
-    #
-    # Cut and pasted from activesupport-1.2.5/lib/inflector.rb
-    #
-    def ordinalize(number)
-      if (number.to_i==-1)
-      	'last'
-      elsif (number.to_i==-2)
-      	'second to last'
-      elsif (11..13).include?(number.to_i % 100)
-      	"#{number}th"
-      else
-        case number.to_i % 10
-          when 1 then "#{number}st"
-          when 2 then "#{number}nd"
-          when 3 then "#{number}rd"
-          else        "#{number}th"
-        end
-      end
-    end
-
   end
 
   #Yes it's true, I'm a big idiot!
@@ -135,7 +113,6 @@ module Runt
   Sixth = 6
   Seventh = 7
   Eighth = 8
-  Eigth = 8  # Will be removed in v0.9.0
   Ninth = 9
   Tenth = 10
 

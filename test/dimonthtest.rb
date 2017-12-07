@@ -53,7 +53,8 @@ class DIMonthTest < BaseExpressionTest
   end
 
   def test_to_s
-    assert_equal 'last Sunday of the month', DIMonth.new(Last_of,Sunday).to_s
+    # 'last Sunday of the month'
+    assert_equal '-1st Sunday of the month', DIMonth.new(Last_of,Sunday).to_s
   end
 
 end

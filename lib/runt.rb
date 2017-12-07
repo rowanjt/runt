@@ -164,7 +164,7 @@ class Date
 
   alias_method :include?, :eql?
 
-  attr_accessor :date_precision
+  attr_writer :date_precision
 
   def date_precision
     # suppress warning: instance variable @date_precision not initialized
@@ -190,7 +190,7 @@ class Time
 
   include Runt
 
-  attr_accessor :date_precision
+  attr_writer :date_precision
   alias_method :old_initialize, :initialize
   def initialize(*args)
     if(args[0].instance_of?(Runt::DPrecision::Precision))

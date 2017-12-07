@@ -167,6 +167,9 @@ class Date
   attr_accessor :date_precision
 
   def date_precision
+    # suppress warning: instance variable @date_precision not initialized
+    @date_precision ||= nil
+
 	if @date_precision.nil? then
       if self.class == DateTime then
         @date_precision = Runt::DPrecision::SEC
@@ -221,6 +224,9 @@ class Time
   end
 
   def date_precision
+    # suppress warning: instance variable @date_precision not initialized
+    @date_precision ||= nil
+
     return @date_precision unless @date_precision.nil?
     return Runt::DPrecision::DEFAULT
   end
@@ -248,4 +254,3 @@ class Numeric #:nodoc:
   microseconds milliseconds seconds minutes hours days weeks months years decades
   ].each{|m| alias_method m.chop, m}
 end
-

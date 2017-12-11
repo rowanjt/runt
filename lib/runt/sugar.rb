@@ -152,13 +152,14 @@ module Runt
     def numeric?(val)
       Float(val) != nil rescue false
     end
+    module_function :numeric?
 
     def parse_param(param)
       numeric?(param) ? param.to_i : param
     end
+    module_function :parse_param
 
     def method_missing(name, *args, &block)
-    	#puts "method_missing(#{name},#{args},#{block}) => #{result}"
       case name.to_s
       when /^daily_(\d{1,2})_(\d{2})([ap]m)_to_(\d{1,2})_(\d{2})([ap]m)$/
         # REDay
@@ -190,31 +191,35 @@ module Runt
     	  super
       end
     end
+    module_function :method_missing
 
     # Shortcut for AfterTE(date, ...).new
     def after(date, inclusive=false)
       AfterTE.new(date, inclusive)
     end
+    module_function :after
 
     # Shortcut for BeforeTE(date, ...).new
     def before(date, inclusive=false)
       BeforeTE.new(date, inclusive)
     end
+    module_function :before
 
     def parse_time(hour, minute, ampm)
       hour = hour.to_i + 12 if ampm =~ /pm/
       [hour.to_i, minute.to_i]
     end
+    module_function :parse_time
 
-    def ordinals
+    def self.ordinals
       WEEK_OF_MONTH_ORDINALS.delete('()').split('|')
     end
 
-    def days
+    def self.days
       DAYS.delete('()').split('|')
     end
 
-    def months
+    def self.months
       MONTHS.delete('()').split('|')
     end
   end

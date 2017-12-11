@@ -27,29 +27,38 @@
 #
 
 require "runt/sugar"
+require 'forwardable'
 
 class ExpressionBuilder
-
-  include Runt::Sugar
+  # this makes the dependancy explicit
+  extend Forwardable
+  def_delegators Runt::Sugar, :method_missing
 
   attr_accessor :ctx
 
   def initialize
+    # composite temporal expression
+    @ctx = nil
+  end
+
+  def reset
     @ctx = nil
   end
 
   def define(&block)
+    # dependent on Runt::Sugar
+    # sxpr is forwarded there
     instance_eval(&block)
-  end
-
-  def on(expr)
-    add(expr, :&)
   end
 
   def add(expr, op)
     @ctx ||= expr
     @ctx = @ctx.send(op, expr) unless @ctx == expr
     @ctx # explicit return, previous line may not execute
+  end
+
+  def on(expr)
+    add(expr, :&)
   end
 
   def except(expr)

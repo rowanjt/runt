@@ -5,27 +5,27 @@ require 'baseexpressiontest'
 class WeekIntervalTest < BaseExpressionTest
 
   def test_every_other_week
-	expr = WeekInterval.new(Date.new(2013,4,23),2)
-	good_dates = [Date.new(2013,4,21), Date.new(2013,4,27),Date.new(2013,5,8)]
-    good_dates.each do |date|
-	  assert(expr.include?(date),"Expr<#{expr}> should include #{date.ctime}")
-	end
-	bad_dates = [Date.new(2013,4,20), Date.new(2013,4,28)]
+  	expr = WeekInterval.new(Date.new(2013,4,23),2)
+  	good_dates = [Date.new(2013,4,21), Date.new(2013,4,27),Date.new(2013,5,8)]
+      good_dates.each do |date|
+  	  assert(expr.include?(date),"Expr<#{expr}> should include #{date.ctime}")
+  	end
+  	bad_dates = [Date.new(2013,4,20), Date.new(2013,4,28)]
     bad_dates.each do |date|
-	  assert(!expr.include?(date),"Expr<#{expr}> should not include #{date.ctime}")
-	end
+  	  assert(!expr.include?(date),"Expr<#{expr}> should not include #{date.ctime}")
+  	end
   end
 
   def test_every_third_week_spans_a_year
-	expr = WeekInterval.new(Date.new(2013,12,25),3)
-	good_dates = [Date.new(2013,12,22),Date.new(2014,1,12)]
-    good_dates.each do |date|
-	  assert(expr.include?(date),"Expr<#{expr}> should include #{date.ctime}")
-	end
-	bad_dates = [Date.new(2013,12,21), Date.new(2013,12,31),Date.new(2014,01,11),Date.new(2014,01,19)]
+  	expr = WeekInterval.new(Date.new(2013,12,25),3)
+  	good_dates = [Date.new(2013,12,22),Date.new(2014,1,12)]
+      good_dates.each do |date|
+  	  assert(expr.include?(date),"Expr<#{expr}> should include #{date.ctime}")
+  	end
+  	bad_dates = [Date.new(2013,12,21), Date.new(2013,12,31),Date.new(2014,01,11),Date.new(2014,01,19)]
     bad_dates.each do |date|
-	  assert(!expr.include?(date),"Expr<#{expr}> should not include #{date.ctime}")
-	end
+  	  assert(!expr.include?(date),"Expr<#{expr}> should not include #{date.ctime}")
+  	end
   end
 
   def test_biweekly_with_sunday_start_with_diweek
@@ -101,6 +101,5 @@ class WeekIntervalTest < BaseExpressionTest
     assert_equal "every 9th week starting with the week containing #{Runt.format_date(date)}", WeekInterval.new(date, 9).to_s
     assert_equal "every 10th week starting with the week containing #{Runt.format_date(date)}", WeekInterval.new(date, 10).to_s
   end
-
 
 end

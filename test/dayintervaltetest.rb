@@ -7,7 +7,6 @@ require 'baseexpressiontest'
 
 class DayIntervalTETest < BaseExpressionTest
 
-
   def test_every_8_days
     date = @date_20040116
     # Match every 8 days
@@ -18,6 +17,16 @@ class DayIntervalTETest < BaseExpressionTest
     assert !expr.include?(date + 4), "Expression #{expr.to_s} should not include #{(date + 4).to_s}"
     # FIXME This test fails
     #assert !expr.include?(date - 8), "Expression #{expr.to_s} should not include #{(date - 8).to_s}"
+  end
+
+  def test_3_day_interval
+    based_on = Date.new(2017, 04, 30)
+    days_every = 3
+    expr = DayIntervalTE.new(based_on, days_every)
+
+    assert expr.include?(based_on + 3)
+    assert expr.include?(based_on + 6)
+    assert expr.include?(based_on - 3)
   end
 
   def test_every_2_days
@@ -32,6 +41,5 @@ class DayIntervalTETest < BaseExpressionTest
     every_four_days = DayIntervalTE.new(Date.new(2006,2,26), 4)
     assert_equal "every 4th day after #{Runt.format_date(Date.new(2006,2,26))}", every_four_days.to_s
   end
-
 
 end

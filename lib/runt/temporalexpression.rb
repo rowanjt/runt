@@ -792,7 +792,6 @@ module Runt
   #
   # Contributed by Ira Burton
   class DayIntervalTE
-
     include TExpr
 
     attr_reader :interval, :base_date
@@ -862,6 +861,7 @@ module Runt
   # Contributed by Jeff Whitmire
   class WeekInterval
     include TExpr
+
     def initialize(start_date,interval=2)
       @start_date = DPrecision.to_p(start_date,DPrecision::DAY)
       # convert base_date to the start of the week
@@ -870,8 +870,8 @@ module Runt
     end
 
     def include?(date)
-  	return false if @base_date > date
-  	((adjust_for_year(date) - week_num(@base_date)) % @interval) == 0
+    	return false if @base_date > date
+    	((adjust_for_year(date) - week_num(@base_date)) % @interval) == 0
     end
 
     def to_s
@@ -880,40 +880,42 @@ module Runt
 
     private
     def week_num(date)
-  	# %U - Week number of the year. The week starts with Sunday.  (00..53)
-  	date.strftime("%U").to_i
+    	# %U - Week number of the year. The week starts with Sunday.  (00..53)
+    	date.strftime("%U").to_i
     end
+
     def max_week_num(year)
-  	d = Date.new(year,12,31)
-  	max = week_num(d)
-  	while max < 52
-  	  d = d - 1
-  	  max = week_num(d)
-  	end
-  	max
+    	d = Date.new(year,12,31)
+    	max = week_num(d)
+    	while max < 52
+    	  d = d - 1
+    	  max = week_num(d)
+    	end
+    	max
     end
+
     def adjust_for_year(date)
-  	# Exclusive range: if date.year == @base_date.year, this will be empty
-  	range_of_years = @base_date.year...date.year
-  	in_same_year = range_of_years.to_a.empty?
-  	# Week number of the given date argument
-  	week_number = week_num(date)
-  	# Default (most common case) date argument is in same year as @base_date
-      # and the week number is also part of the same year. This starting value
-  	# is also necessary for the case where they're not in the same year.
-  	adjustment = week_number
-  	if in_same_year && (week_number < week_num(@base_date))
-  	  # The given date occurs within the same year
-  	  # but is actually week number 1 of the next year
-  	  adjustment = adjustment + max_week_num(date.year)
-  	elsif !in_same_year
-  	  # Date occurs in different year
-  	  range_of_years.each do |year|
-  	    # Max week number taking into account we are not using commercial week
-  	    adjustment = adjustment + max_week_num(year)
-  	  end
-  	end
-  	adjustment
+    	# Exclusive range: if date.year == @base_date.year, this will be empty
+    	range_of_years = @base_date.year...date.year
+    	in_same_year = range_of_years.to_a.empty?
+    	# Week number of the given date argument
+    	week_number = week_num(date)
+    	# Default (most common case) date argument is in same year as @base_date
+        # and the week number is also part of the same year. This starting value
+    	# is also necessary for the case where they're not in the same year.
+    	adjustment = week_number
+    	if in_same_year && (week_number < week_num(@base_date))
+    	  # The given date occurs within the same year
+    	  # but is actually week number 1 of the next year
+    	  adjustment = adjustment + max_week_num(date.year)
+    	elsif !in_same_year
+    	  # Date occurs in different year
+    	  range_of_years.each do |year|
+    	    # Max week number taking into account we are not using commercial week
+    	    adjustment = adjustment + max_week_num(year)
+    	  end
+    	end
+    	adjustment
     end
   end
 

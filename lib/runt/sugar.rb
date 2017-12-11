@@ -171,15 +171,29 @@ module Runt
         # REWeek
         st_day, end_day = [$1, $2].map{|p| parse_param(p)}
         return REWeek.new(Runt.const(st_day), Runt.const(end_day))
-      when Regexp.new('^monthly_(\d{1,2})' + ORDINAL_SUFFIX + '_to_(\d{1,2})' \
-  		    + ORDINAL_SUFFIX + '$')
+      when Regexp.new('^weekly_' + DAYS + '$')
+        weekday = parse_param($1)
+        return DIWeek.new(Runt.const(weekday))
+      when Regexp.new('^monthly_(\d{1,2})' + ORDINAL_SUFFIX + '_to_(\d{1,2})' + ORDINAL_SUFFIX + '$')
         # REMonth
         st_day, end_day = [$1, $2].map{|p| parse_param(p)}
         return REMonth.new(st_day, end_day)
+      when Regexp.new("^monthly_(\\d{1,2})#{ORDINAL_SUFFIX}$")
+        st_day = parse_param($1)
+        return REMonth.new(st_day)
       when Regexp.new('^yearly_' + MONTHS + '_(\d{1,2})_to_' + MONTHS + '_(\d{1,2})$')
         # REYear
         st_mon, st_day, end_mon, end_day = [$1, $2, $3, $4].map{|p| parse_param(p)}
         return REYear.new(Runt.const(st_mon), st_day, Runt.const(end_mon), end_day)
+      when Regexp.new("^yearly_#{MONTHS}_(\\d{1,2})$")
+        st_mon, st_day = [$1, $2].map{|p| parse_param(p)}
+        return REYear.new(Runt.const(st_mon), st_day, Runt.const(st_mon), st_day)
+      when Regexp.new("^yearly_#{MONTHS}$")
+        st_mon = parse_param($1)
+        return REYear.new(Runt.const(st_mon))
+      when Regexp.new("^year_(\\d{4})$")
+        year_number = parse_param($1)
+        YearTE.new(year_number)
       when Regexp.new('^' + DAYS + '$')
         # DIWeek
         return DIWeek.new(Runt.const(name.to_s))
@@ -187,6 +201,12 @@ module Runt
         # DIMonth
         ordinal, day = [$1, $2].map{|p| parse_param(p)}
         return DIMonth.new(Runt.const(ordinal), Runt.const(day))
+      when Regexp.new("^before_(\\d{4})-(\\d{2})-(\\d{2})$")
+        year, month, day = [$1, $2, $3].map{|p| parse_param(p)}
+        before(Date.new(year, month, day))
+      when Regexp.new("^after_(\\d{4})-(\\d{2})-(\\d{2})$")
+        year, month, day = [$1, $2, $3].map{|p| parse_param(p)}
+        after(Date.new(year, month, day))
       else
     	  super
       end

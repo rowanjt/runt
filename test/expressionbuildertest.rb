@@ -60,4 +60,14 @@ class ExpressionBuilderTest < Minitest::Test
     end
     assert_equal manual.to_s, expression.to_s, "Expected #{manual.to_s} but was #{expression.to_s}"
   end
+
+  def test_define_chain_independently
+    @expr_builder = ExpressionBuilder.new
+    expr = @expr_builder.define {occurs yearly_december_25}
+    expr = @expr_builder.define {possibly last_wednesday}
+    expr = @expr_builder.define {on monday}
+
+    assert expr.to_s,
+      'every December 25th through December 25th or -1st Wednesday of the month'
+  end
 end

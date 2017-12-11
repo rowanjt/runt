@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 
 module Runt
-
-
   # Implementation of a <tt>pattern</tt>[http://martinfowler.com/apsupp/recurring.pdf]
   # for recurring calendar events created by Martin Fowler.
   class Schedule
@@ -38,15 +36,14 @@ module Runt
     # Return true or false depend on if the supplied event is scheduled to occur on the
     # given date.
     def include?(event, date)
-      return false unless @elems.include?(event)
-      return 0<(self.select{|ev,xpr| ev.eql?(event)&&xpr.include?(date);}).size
+      events(date).any? { |e| e.eql? event }
     end
 
     #
     # Returns all Events whose Temporal Expression includes the given date/expression
     #
     def events(date)
-      self.select{|ev,xpr| xpr.include?(date);}
+      self.select { |ev,xpr| xpr.include?(date) }
     end
 
     #

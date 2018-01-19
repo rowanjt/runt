@@ -26,6 +26,10 @@ class ScheduleTest < Minitest::Test
   end
 
   def test_include
+    # include without added events
+    schedule = Schedule.new
+    refute schedule.include?(@elmo, @during_elmo)
+
     # Check Elmo
     assert(@sched.include?(@elmo, @during_elmo))
     assert(!@sched.include?(@elmo,@not_during_elmo))

@@ -7,7 +7,6 @@ module Runt
 
     def initialize
       @elems = Hash.new
-      self
     end
 
     #  Schedule event to occur using the given expression.
@@ -16,7 +15,7 @@ module Runt
     #  they depended on the ability to call add multiple times for the same
     #  event. Use the update method instead.
     def add(event, expression)
-      @elems[event]=expression
+      @elems[event] = expression
     end
 
     # For the given date range, returns an Array of PDate objects at which
@@ -43,7 +42,7 @@ module Runt
     # Returns all Events whose Temporal Expression includes the given date/expression
     #
     def events(date)
-      self.select { |ev,xpr| xpr.include?(date) }
+      select { |_event, xpr| xpr.include?(date) }
     end
 
     #
@@ -55,7 +54,9 @@ module Runt
     #
     def select(&block)
       result=[]
-      @elems.each_pair{|event,xpr| result.push(event) if block.call(event,xpr);}
+      @elems.each_pair do |event, xpr|
+        result.push(event) if block.call(event,xpr)
+      end
       result
     end
 

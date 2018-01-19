@@ -6,11 +6,11 @@ require 'runt/version'
 Gem::Specification.new do |spec|
   spec.name          = "runt"
   spec.version       = Runt::VERSION
-  spec.authors       = ["Matthew Lipper"]
-  spec.email         = ["mlipper@gmail.com"]
+  spec.authors       = [""]
+  spec.email         = [""]
   spec.description   = %q{Runt is a Ruby implementation of temporal patterns by Martin Fowler. Runt provides an API for working with recurring events using set expressions.}
   spec.summary       = %q{Ruby Temporal Expressions}
-  spec.homepage      = "http://github.com/mlipper/runt"
+  spec.homepage      = "http://github.com/rowanjt/runt"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

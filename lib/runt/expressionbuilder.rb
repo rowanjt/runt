@@ -26,8 +26,9 @@
 # * <b>:maybe</b> - alias for :possibly method
 #
 
-require "runt/sugar"
+require 'runt/sugar'
 require 'forwardable'
+require 'runt/expressions/null_expression'
 
 class ExpressionBuilder
   # this makes the dependancy explicit
@@ -38,11 +39,11 @@ class ExpressionBuilder
 
   def initialize
     # composite temporal expression
-    @ctx = nil
+    @ctx = Runt::Expressions::NullExpression.new
   end
 
   def reset
-    @ctx = nil
+    @ctx = Runt::Expressions::NullExpression.new
   end
 
   def define(&block)
@@ -52,7 +53,7 @@ class ExpressionBuilder
   end
 
   def add(expr, op)
-    @ctx ||= expr
+    @ctx = expr if @ctx.is_a?(Runt::Expressions::NullExpression)
     @ctx = @ctx.send(op, expr) unless @ctx == expr
     @ctx # explicit return, previous line may not execute
   end

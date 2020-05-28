@@ -48,7 +48,7 @@ module Runt
       eql?(expr)
     end
 
-    def + (n)
+    def +(n)
       raise TypeError, 'expected numeric' unless n.kind_of?(Numeric)
 	  ndays = n
       case @date_precision
@@ -72,7 +72,7 @@ module Runt
 	  DPrecision::to_p((self.to_date + ndays),@date_precision)
     end
 
-    def - (x)
+    def -(x)
       case x
       when Numeric then
         return self+(-x)
@@ -82,7 +82,7 @@ module Runt
       raise TypeError, 'expected numeric or date'
     end
 
-    def <=> (other)
+    def <=>(other)
       result = nil
   	  raise "I'm broken #{self.to_s}" if @date_precision.nil?
       if(!other.nil? && other.respond_to?("date_precision") && other.date_precision>@date_precision)

@@ -20,7 +20,7 @@ module Runt
 
     def to_s; "TExpr" end
 
-    def or (arg)
+    def or(arg)
 
       if self.kind_of?(Union)
         self.add(arg)
@@ -30,7 +30,7 @@ module Runt
 
     end
 
-    def and (arg)
+    def and(arg)
 
       if self.kind_of?(Intersect)
         self.add(arg)
@@ -40,19 +40,19 @@ module Runt
 
     end
 
-    def minus (arg)
+    def minus(arg)
         yield Diff.new(self,arg)
     end
 
-    def | (expr)
+    def |(expr)
       self.or(expr){|adjusted| adjusted }
     end
 
-    def & (expr)
+    def &(expr)
       self.and(expr){|adjusted| adjusted }
     end
 
-    def - (expr)
+    def -(expr)
       self.minus(expr){|adjusted| adjusted }
     end
 

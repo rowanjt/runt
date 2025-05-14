@@ -5,11 +5,8 @@ require 'date'
 
 module CoreExtensions
   module DatePrecision
-    # module ClassMethods
-    # end
 
-    module InstanceMethods
-      # NOTE: PDateTest#test_include
+    refine Date do
       # alias_method :include?, :eql?
 
       attr_writer :date_precision
@@ -30,12 +27,5 @@ module CoreExtensions
       end
     end
 
-    # refine Date.singleton_class do
-    #   prepend DatePrecision::ClassMethods
-    # end
-
-    refine Date do
-      prepend DatePrecision::InstanceMethods
-    end
   end
 end
